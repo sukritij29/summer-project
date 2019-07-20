@@ -2,15 +2,19 @@ var User = require('../models/user');
 var jwt  =require('jsonwebtoken');
 var secret='harrypotter';
 
-
 module.exports= function(router) {
     router.post('/users',function(req, res){
+
         var user = new User();
+        
         user.username = req.body.username;
         user.password = req.body.password;
         user.email = req.body.email;
-        user.tt1 = req.body.tt1;
-        user.tt2 = req.body.tt2;
+        user.monday = req.body.monday;
+        user.tuesday = req.body.tuesday;
+        user.wednesday = req.body.wednesday;
+        user.thursday = req.body.thursday;
+        user.friday = req.body.friday;
 
         if (req.body.username == null || req.body.username == '' || req.body.password == null || req.body.password == '' || req.body.email == null || req.body.email == '') {
           res.send('ensure all fields are filled');
@@ -39,7 +43,7 @@ module.exports= function(router) {
                 if (req.body.password) {
                     var validPassword = user.comparePassword(req.body.password); 
                 } else {
-                    res.send({ success: false, message: 'No password provided' }); 
+                    res.send({ success: false, message: 'No password provided' });
                 }
                 if (!validPassword) {
                     res.send({ success: false, message: 'Could not authenticate password' }); 
